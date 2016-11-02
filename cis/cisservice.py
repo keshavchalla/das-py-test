@@ -6,15 +6,15 @@ import time
 import pickle
 import sys
 from time import gmtime, strftime
-from requests.packages.urllib3 import response
-import configs.config
+#from requests.packages.urllib3 import response
+#import configs.config
 
 HEADER = {'content-type': 'text/xml'}
 
 class CISService(unittest.TestCase):
     def __init__(self, testName, *args):
         super(CISService, self).__init__(testName)
-        self.cisEndpoint = configs.config.CityStateService
+        self.cisEndpoint = "http://weather-citystate-service.cfapps.io/getZipForCityState?state=CT&city=Windsor"
         logging.basicConfig(filename="cis.log",level=logging.DEBUG)
         sys.stdout = open('finaltestresult', 'w')
         self.terminal = sys.stdout
@@ -32,14 +32,14 @@ class CISService(unittest.TestCase):
         """TestCase:getCustomerForValidTN"""
         trackingId = "CIS_"+self._testMethodName[4:]+str(time.time()).replace(".","")[8:]
         self.testId = 1#self.params[0][0]
-        uri = configs.config.WeatherDetailsServiceURL
+        uri = "http://weather-citystate-service.cfapps.io/getZipForCityState?state=CT&city=Windsor"
         response = requests.get(uri)
         self.response = response
         data = response.json()
         f = open('workfile', 'a')
         pickle.dump(response.content, f)
         f.close()
-        self.assertEqual(data['country abbreviation'],'US')
+        self.assertEqual(data['country abbreviation'], self.args[0])
         
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
