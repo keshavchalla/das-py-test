@@ -14,7 +14,7 @@ HEADER = {'content-type': 'text/xml'}
 class CISService(unittest.TestCase):
     def __init__(self, testName, *args):
         super(CISService, self).__init__(testName)
-        self.cisEndpoint = configs.config.CISEndpoint
+        self.cisEndpoint = configs.config.CityStateService
         logging.basicConfig(filename="cis.log",level=logging.DEBUG)
         sys.stdout = open('finaltestresult', 'w')
         self.terminal = sys.stdout
@@ -39,7 +39,7 @@ class CISService(unittest.TestCase):
         f = open('workfile', 'a')
         pickle.dump(response.content, f)
         f.close()
-        self.assertEqual(data['countryCode'],'USA')
+        self.assertEqual(data['country abbreviation'],'US')
         
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
