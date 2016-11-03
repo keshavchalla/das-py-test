@@ -17,7 +17,7 @@ class CISService(unittest.TestCase):
         self.cisEndpoint = "http://weather-citystate-service.cfapps.io/getZipForCityState?state=CT&city=Windsor"
         logging.basicConfig(filename="cis.log",level=logging.DEBUG)
         sys.stdout = open('finaltestresult', 'w')
-        self.terminal = sys.stdout
+        sys.stdout.flush()
         
     def setUp(self):
         logging.debug("Validating: %s"%self._testMethodName)
