@@ -22,7 +22,6 @@ class CISService(unittest.TestCase):
     def setUp(self):
         logging.debug("Validating: %s"%self._testMethodName)
         logging.debug("Validating: %s"%self.cisEndpoint)
-        print self.cisEndpoint
 
     def tearDown(self):
         logging.debug(" Request:")#%s"%self.cisEndpoint)#, "/%s"%self.params)
@@ -39,7 +38,7 @@ class CISService(unittest.TestCase):
         f = open('workfile', 'a')
         pickle.dump(response.content, f)
         f.close()
-        self.assertEqual(data['country abbreviation'], self.args[0])
+        self.assertEqual(data['country abbreviation'], 'US')
         
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
