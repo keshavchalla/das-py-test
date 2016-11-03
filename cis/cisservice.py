@@ -7,7 +7,7 @@ import pickle
 import sys
 from time import gmtime, strftime
 #from requests.packages.urllib3 import response
-#import configs.config
+import configs.config
 
 HEADER = {'content-type': 'text/xml'}
 
@@ -30,6 +30,7 @@ class CISService(unittest.TestCase):
 
     def testGetCustomerForValidTN(self):
         """TestCase:getCustomerForValidTN"""
+	#print sys.argv[1]
         trackingId = "CIS_"+self._testMethodName[4:]+str(time.time()).replace(".","")[8:]
         self.testId = 1#self.params[0][0]
         uri = configs.config.CityStateService #"http://weather-citystate-service.cfapps.io/getZipForCityState?state=CT&city=Windsor"
