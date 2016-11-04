@@ -17,7 +17,7 @@ PyATFDBPassword=""
 CISServiceURL=""
 
 #Timeouts
-BUILD_FETCH_MAXDURATION = 20
+BUILD_FETCH_MAXDURATION = 10 
 
 #ApplicationHost
 HOST=""

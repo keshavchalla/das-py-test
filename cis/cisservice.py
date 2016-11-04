@@ -29,12 +29,11 @@ class CISService(unittest.TestCase):
         uri = configs.config.CISEndpoint
         response = requests.get(uri)
         self.response = response
-        data = response.json()
         f = open('workfile', 'w')
         pickle.dump(response.content, f)
         f.close()
-        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
-        self.assertEqual(len(data[0]), 2)   
+        self.assertEqual(response[1]['tnType'], 'UNKNOWN')
+        self.assertEqual(len(response[0]), 2)   
         
     def testValidTN_MultipleCustomers_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
@@ -42,11 +41,10 @@ class CISService(unittest.TestCase):
         uri = configs.config.CISEndpoint
         response = requests.get(uri)
         self.response = response
-        data = response.json()
         f = open('workfile', 'w')
         pickle.dump(response.content, f)
         f.close()
-        self.assertFalse(len(data[0]), 1)        
+        self.assertFalse(len(response[0]), 1)        
         
 if __name__ == '__main__':
     unittest.main()
