@@ -14,7 +14,6 @@ class CISService(unittest.TestCase):
         self.cisEndpoint = configs.config.CISEndpoint
         logging.basicConfig(filename="cis.log",level=logging.DEBUG)
         sys.stdout = open('finaltestresult', 'w')
-        sys.stdout.flush()
         
     def setUp(self):
         logging.debug("Validating: %s"%self._testMethodName)
