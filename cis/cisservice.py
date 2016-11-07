@@ -24,7 +24,7 @@ class CISService(unittest.TestCase):
     def testValidTN_MultipleCustomers_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
         self.testId = "cis_test_007_Success"
-        uri = configs.config.CISEndpoint
+        uri = configs.config.CISEndpoint + "6105555551"
         response = requests.get(uri)
         data = response.json()
         self.response = response
@@ -37,7 +37,7 @@ class CISService(unittest.TestCase):
     def testValidTN_MultipleCustomers_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
         self.testId = "cis_test_007_Failure"
-        uri = configs.config.CISEndpoint
+        uri = configs.config.CISEndpoint + "6105555551"
         response = requests.get(uri)
         data = response.json()
         self.response = response
@@ -48,8 +48,8 @@ class CISService(unittest.TestCase):
     
     def testValidTN_SingleCustomerCSG_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
-        self.testId = "cis_test_007_Success"
-        uri = configs.config.CISEndpoint
+        self.testId = "cis_test_006_Success"
+        uri = configs.config.CISEndpoint + "3860137486"
         response = requests.get(uri)
         data = response.json()
         self.response = response
@@ -61,8 +61,8 @@ class CISService(unittest.TestCase):
         
     def testValidTN_SingleCustomerCSG_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
-        self.testId = "cis_test_007_Failure"
-        uri = configs.config.CISEndpoint
+        self.testId = "cis_test_006_Failure"
+        uri = configs.config.CISEndpoint + "3860137486"
         response = requests.get(uri)
         data = response.json()
         self.response = response
@@ -73,7 +73,7 @@ class CISService(unittest.TestCase):
     
     def testValidTN_SingleCustomerDDP_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
-        self.testId = "cis_test_007_Success"
+        self.testId = "cis_test_009_Success"
         uri = configs.config.CISEndpoint
         response = requests.get(uri)
         data = response.json()
@@ -86,7 +86,7 @@ class CISService(unittest.TestCase):
         
     def testValidTN_SingleCustomerDDP_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
-        self.testId = "cis_test_007_Failure"
+        self.testId = "cis_test_009_Failure"
         uri = configs.config.CISEndpoint
         response = requests.get(uri)
         data = response.json()
@@ -98,8 +98,8 @@ class CISService(unittest.TestCase):
         
     def testInvalidTN_Length_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
-        self.testId = "cis_test_007_Success"
-        uri = configs.config.CISEndpoint
+        self.testId = "cis_test_017_Success"
+        uri = configs.config.CISEndpoint + "233"
         response = requests.get(uri)
         data = response.json()
         self.response = response
@@ -111,8 +111,8 @@ class CISService(unittest.TestCase):
         
     def testInvalidTN_Length_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
-        self.testId = "cis_test_007_Failure"
-        uri = configs.config.CISEndpoint
+        self.testId = "cis_test_017_Failure"
+        uri = configs.config.CISEndpoint + "233"
         response = requests.get(uri)
         data = response.json()
         self.response = response
