@@ -6,8 +6,6 @@ import pickle
 import sys
 import configs.config
 
-HEADER = {'content-type': 'text/xml'}
-
 class CISService(unittest.TestCase):
     def __init__(self, testName, *args):
         super(CISService, self).__init__(testName)
@@ -122,6 +120,8 @@ class CISService(unittest.TestCase):
         pickle.dump(data.content, f)
         f.close()
         #self.assertFalse(len(data[0][0]), 1)
-        
+           
 if __name__ == '__main__':
+    #del sys.argv[1:]
+    #print sys.argv[1]
     unittest.main()
