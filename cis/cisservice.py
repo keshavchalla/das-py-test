@@ -28,23 +28,100 @@ class CISService(unittest.TestCase):
         self.testId = "cis_test_007_Success"
         uri = configs.config.CISEndpoint
         response = requests.get(uri)
+        data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(response.content, f)
+        pickle.dump(data.content, f)
         f.close()
-        self.assertEqual(response[1]['tnType'], 'UNKNOWN')
-        self.assertEqual(len(response[0]), 2)   
+        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
+        self.assertEqual(len(data[0]), 2)   
         
     def testValidTN_MultipleCustomers_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
         self.testId = "cis_test_007_Failure"
         uri = configs.config.CISEndpoint
         response = requests.get(uri)
+        data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(response.content, f)
+        pickle.dump(data.content, f)
         f.close()
-        self.assertFalse(len(response[0]), 1)        
+        self.assertFalse(len(data[0]), 1)        
+    
+    def testValidTN_SingleCustomerCSG_Success(self):
+        """TestCase:getValidTN_MultipleCustomers_Success"""
+        self.testId = "cis_test_007_Success"
+        uri = configs.config.CISEndpoint
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data.content, f)
+        f.close()
+        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
+        self.assertEqual(len(data[0][0]), 16)   
+        
+    def testValidTN_SingleCustomerCSG_Failure(self):
+        """TestCase:getValidTN_MultipleCustomers_Failure"""
+        self.testId = "cis_test_007_Failure"
+        uri = configs.config.CISEndpoint
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data.content, f)
+        f.close()
+        self.assertFalse(len(data[0][0]), 1)
+    
+    def testValidTN_SingleCustomerDDP_Success(self):
+        """TestCase:getValidTN_MultipleCustomers_Success"""
+        self.testId = "cis_test_007_Success"
+        uri = configs.config.CISEndpoint
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data.content, f)
+        f.close()
+        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
+        self.assertEqual(len(data[0][0]), 16)   
+        
+    def testValidTN_SingleCustomerDDP_Failure(self):
+        """TestCase:getValidTN_MultipleCustomers_Failure"""
+        self.testId = "cis_test_007_Failure"
+        uri = configs.config.CISEndpoint
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data.content, f)
+        f.close()
+        self.assertFalse(len(data[0][0]), 1)
+        
+    def testInvalidTN_Length_Success(self):
+        """TestCase:getValidTN_MultipleCustomers_Success"""
+        self.testId = "cis_test_007_Success"
+        uri = configs.config.CISEndpoint
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data.content, f)
+        f.close()
+        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
+        #self.assertEqual(len(data[0][0]), 16)   
+        
+    def testInvalidTN_Length_Failure(self):
+        """TestCase:getValidTN_MultipleCustomers_Failure"""
+        self.testId = "cis_test_007_Failure"
+        uri = configs.config.CISEndpoint
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data.content, f)
+        f.close()
+        #self.assertFalse(len(data[0][0]), 1)
         
 if __name__ == '__main__':
     unittest.main()
