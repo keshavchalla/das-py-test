@@ -29,10 +29,11 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
         self.assertEqual(data[1]['tnType'], 'UNKNOWN')
-        self.assertEqual(len(data[0]), 2)   
+        self.assertEqual((len(data[0])), 2)
+        self.assertEqual((len(data)), 6)
         
     def testValidTN_MultipleCustomers_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
@@ -42,9 +43,9 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        self.assertFalse(len(data[0]), 1)        
+        self.assertNotEquals((len(data)), 4)
     
     def testValidTN_SingleCustomerCSG_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
@@ -54,10 +55,10 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
-        self.assertEqual(len(data[0][0]), 16)   
+        self.assertTrue(data[0]['tnType'], 'UNKNOWN')
+        self.assertEqual(len(data[0]['accountNumber']), 16)
         
     def testValidTN_SingleCustomerCSG_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
@@ -67,9 +68,9 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        self.assertFalse(len(data[0][0]), 1)
+        self.assertNotEqual((len(data)), 2)
     
     def testValidTN_SingleCustomerDDP_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
@@ -79,10 +80,10 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
-        self.assertEqual(len(data[0][0]), 16)   
+        self.assertEqual(response.status_code, 404)
+
         
     def testValidTN_SingleCustomerDDP_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
@@ -92,9 +93,9 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        self.assertFalse(len(data[0][0]), 1)
+        self.assertNotEquals(response.status_code, 500)
         
     def testInvalidTN_Length_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
@@ -104,9 +105,10 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        self.assertEqual(data[1]['tnType'], 'UNKNOWN')
+        print response.status_code
+        self.assertEqual(response.status_code, 500)
         #self.assertEqual(len(data[0][0]), 16)   
         
     def testInvalidTN_Length_Failure(self):
@@ -117,9 +119,9 @@ class CISService(unittest.TestCase):
         data = response.json()
         self.response = response
         f = open('workfile', 'w')
-        pickle.dump(data.content, f)
+        pickle.dump(data, f)
         f.close()
-        #self.assertFalse(len(data[0][0]), 1)
+        self.assertNotEquals(response.status_code, 200)
            
 if __name__ == '__main__':
     #del sys.argv[1:]
