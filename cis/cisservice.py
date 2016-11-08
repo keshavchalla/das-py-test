@@ -122,6 +122,110 @@ class CISService(unittest.TestCase):
         pickle.dump(data, f)
         f.close()
         self.assertNotEquals(response.status_code, 200)
+        
+    def testInvalidTN_NXX_Success(self):
+        """TestCase:InvalidTN_NXX_Success"""
+        self.testId = "cis_test_020_Success"
+        uri = configs.config.CISEndpoint + "8870641237"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        print response.status_code
+        self.assertEqual(response.status_code, 500)
+        #self.assertEqual(len(data[0][0]), 16)   
+        
+    def testInvalidTN_NXX_Failure(self):
+        """TestCase:InvalidTN_NXX_Failure"""
+        self.testId = "cis_test_020_Failure"
+        uri = configs.config.CISEndpoint + "8870641237"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        self.assertNotEquals(response.status_code, 200)
+        
+    def testInvalidTN_NXX_N11_Success(self):
+        """TestCase:InvalidTN_NXX_N11_Success"""
+        self.testId = "cis_test_021_Success"
+        uri = configs.config.CISEndpoint + "233"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        print response.status_code
+        self.assertEqual(response.status_code, 500)
+        #self.assertEqual(len(data[0][0]), 16)   
+        
+    def testInvalidTN_NXX_N11s_Failure(self):
+        """TestCase:InvalidTN_NXX_N11_Failure"""
+        self.testId = "cis_test_021_Failure"
+        uri = configs.config.CISEndpoint + "233"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        self.assertNotEquals(response.status_code, 200)
+        
+    def testInvalidTN_NXX_555_Success(self):
+        """TestCase:InvalidTN_NXX_555_Success"""
+        self.testId = "cis_test_022_Success"
+        uri = configs.config.CISEndpoint + "233"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        print response.status_code
+        self.assertEqual(response.status_code, 500)
+        #self.assertEqual(len(data[0][0]), 16)   
+        
+    def testInvalidTN_NXX_555_Failure(self):
+        """TestCase:InvalidTN_NXX_555_Failure"""
+        self.testId = "cis_test_022_Failure"
+        uri = configs.config.CISEndpoint + "233"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        self.assertNotEquals(response.status_code, 200)
+        
+    def testInValidTN_Identical_Success(self):
+        """TestCase:InValidTN_Identical_Success"""
+        self.testId = "cis_test_023_Success"
+        uri = configs.config.CISEndpoint + "233"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        print response.status_code
+        self.assertEqual(response.status_code, 500)
+        #self.assertEqual(len(data[0][0]), 16)   
+        
+    def testInValidTN_Identical_Failure(self):
+        """TestCase:InValidTN_Identical_Failure"""
+        self.testId = "cis_test_023_Failure"
+        uri = configs.config.CISEndpoint + "233"
+        response = requests.get(uri)
+        data = response.json()
+        self.response = response
+        f = open('workfile', 'w')
+        pickle.dump(data, f)
+        f.close()
+        self.assertNotEquals(response.status_code, 200)
            
 if __name__ == '__main__':
     #del sys.argv[1:]
