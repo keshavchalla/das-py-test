@@ -40,11 +40,11 @@ class CISService(unittest.TestCase):
         """TestCase:getValidTN_CISService_NotDeployed_Success"""
         self.testId = "cis_test_001_Success"
         uri = configs.config.CISEndpoint + "4756412378"
-        response = requests.get(uri)
-        output = response.json()
-        cisService = CISService("testValidTN_CISService_NotDeployed_Success")
-        cisService.writeResponseToFile(output)
-        cisService.printOutput("cis_test_001_Success", "testValidTN_CISService_NotDeployed_Success", output)
+#         response = requests.get(uri)
+#         output = response.json()
+#         cisService = CISService("testValidTN_CISService_NotDeployed_Success")
+#         cisService.writeResponseToFile(output)
+#         cisService.printOutput("cis_test_001_Success", "testValidTN_CISService_NotDeployed_Success", output)
 #         self.assertEqual(response.status_code, 404)
 # 
 #     def testValidTN_CISService_NotDeployed_Failure(self):
