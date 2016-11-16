@@ -19,7 +19,7 @@ class CISService(unittest.TestCase):
 
     def tearDown(self):
         logging.debug(" Request:%s" % self.cisEndpoint)
-        logging.debug(" Response:%s")# % self.response)
+        logging.debug(" Response:%s" % self.response)
 
     def writeResponseToFile(self, output):
         self.response = output
