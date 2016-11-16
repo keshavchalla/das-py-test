@@ -5,7 +5,6 @@ import pickle
 import sys
 import configs.config
 
-
 class CISService(unittest.TestCase):
     def __init__(self, testName, *args):
         super(CISService, self).__init__(testName)
