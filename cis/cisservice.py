@@ -19,7 +19,7 @@ class CISService(unittest.TestCase):
 
     def tearDown(self):
         logging.debug(" Request:%s" % self.cisEndpoint)
-        logging.debug(" Response:%s" % self.response)
+        logging.debug(" Response:%s")# % self.response)
 
     def writeResponseToFile(self, output):
         self.response = output
@@ -27,15 +27,26 @@ class CISService(unittest.TestCase):
         pickle.dump(output, f)
         f.close()
 
-    def printOutput(self, testId, testName, output):
+    def printOutput(self, testId, output):
         print '------------------------------------------------------------------------------------------------------------------------------------------------------'
         print 'Test Case Id : ' + testId
-        print 'Test Name : ' + testName
+        print 'Test Name : ' + self._testMethodName
         print 'Input : ' + self.cisEndpoint
         print 'Output :'
         print  output
         print '------------------------------------------------------------------------------------------------------------------------------------------------------'
 
+    def testValidTN_SingleCustomerCSG_Success1(self):
+        """TestCase:getValidTN_SingleCustomerCSG_Success"""
+        self.testId = "cis_test_006_Success"
+        uri = configs.config.Hover  # + "3860137486"
+        response = requests.get(uri)
+        output = response.json()
+        cisService = CISService("testValidTN_SingleCustomerCSG_Success")
+        cisService.writeResponseToFile(output)
+        cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
+
+ 
     def testValidTN_CISService_NotDeployed_Success(self):
         """TestCase:getValidTN_CISService_NotDeployed_Success"""
         self.testId = "cis_test_001_Success"
@@ -44,9 +55,9 @@ class CISService(unittest.TestCase):
         output = response.json()
         cisService = CISService("testValidTN_CISService_NotDeployed_Success")
         cisService.writeResponseToFile(output)
-        cisService.printOutput("cis_test_001_Success", "testValidTN_CISService_NotDeployed_Success", output)
+        cisService.printOutput("cis_test_001_Success", output)
         self.assertEqual(response.status_code, 404)
-
+ 
     def testValidTN_CISService_NotDeployed_Failure(self):
         """TestCase:getValidTN_CISService_NotDeployed_Failure"""
         self.testId = "cis_test_001_Failure"
@@ -57,7 +68,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_001_Failure", "testValidTN_CISService_NotDeployed_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-        
+         
     def testValidTN_CISService_NotAvailable_Success(self):
         """TestCase:getValidTN_CISService_NotAvailable_Success"""
         self.testId = "cis_test_002_Success"
@@ -68,7 +79,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_002_Success", "testValidTN_CISService_NotAvailable_Success", output)
         self.assertEqual(response.status_code, 404)
-
+ 
     def testValidTN_CISService_NotAvailable_Failure(self):
         """TestCase:getValidTN_CISService_NotAvailable_Failure"""
         self.testId = "cis_test_002_Failure"
@@ -79,7 +90,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_002_Failure", "testValidTN_CISService_NotAvailable_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testValidTN_CISService_InvalidPathParameter_Success(self):
         """TestCase:getValidTN_CISService_InvalidPathParameter_Success"""
         self.testId = "cis_test_003_Success"
@@ -90,7 +101,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_003_Success", "testValidTN_CISService_InvalidPathParameter_Success", output)
         self.assertEqual(response.status_code, 404)
-
+ 
     def testValidTN_CISService_InvalidPathParameter_Failure(self):
         """TestCase:getValidTN_CISService_InvalidPathParameter_Failure"""
         self.testId = "cis_test_003_Failure"
@@ -101,7 +112,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_003_Failure", "testValidTN_CISService_InvalidPathParameter_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-        
+         
     def testAuthentication_Success(self):
         """TestCase:getAuthentication_Success"""
         self.testId = "cis_test_004_Success"
@@ -112,7 +123,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_004_Success", "testAuthentication_Success", output)
         self.assertEqual(response.status_code, 404)
-
+ 
     def testAuthentication_Failure(self):
         """TestCase:getAuthentication_Failure"""
         self.testId = "cis_test_005_Failure"
@@ -123,12 +134,11 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_005_Failure", "testAuthentication_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
-
+ 
     def testValidTN_SingleCustomerCSG_Success(self):
         """TestCase:getValidTN_SingleCustomerCSG_Success"""
         self.testId = "cis_test_006_Success"
-        uri = configs.config.Cust  # + "3860137486"
+        uri = configs.config.Hover  # + "3860137486"
         response = requests.get(uri)
         output = response.json()
         cisService = CISService("testValidTN_SingleCustomerCSG_Success")
@@ -137,7 +147,7 @@ class CISService(unittest.TestCase):
         self.assertEqual((len(output[0])), 2)
         self.assertEqual(len(output[0]['accountNumber']), 16)
         self.assertTrue(output[0]['tnType'], 'UNKNOWN')
-
+ 
     def testValidTN_SingleCustomerCSG_Failure(self):
         """TestCase:getValidTN_SingleCustomerCSG_Failure"""
         self.testId = "cis_test_006_Failure"
@@ -148,7 +158,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Failure", "testInValidTN_Identical_Success", output)
         self.assertNotEqual((len(output)), 2)
-
+ 
     def testValidTN_MultipleCustomers_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Success"""
         self.testId = "cis_test_007_Success"
@@ -161,7 +171,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_MultipleCustomers_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Failure"""
         self.testId = "cis_test_007_Failure"
@@ -172,7 +182,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_007_Failure", "testValidTN_MultipleCustomers_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_MultipleCustomers_CSG_Success(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_Success"""
         self.testId = "cis_test_008_Success"
@@ -185,7 +195,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_MultipleCustomers_CSG_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_Failure"""
         self.testId = "cis_test_008_Failure"
@@ -196,7 +206,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_008_Failure", "testValidTN_MultipleCustomers_CSG_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_SingleCustomerDDP_Success(self):
         """TestCase:getValidTN_SingleCustomerDDP_Success"""
         self.testId = "cis_test_009_Success"
@@ -207,7 +217,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_009_Success", "testValidTN_SingleCustomerDDP_Success", output)
         self.assertEqual(response.status_code, 404)
-
+ 
     def testValidTN_SingleCustomerDDP_Failure(self):
         """TestCase:getValidTN_SingleCustomerDDP_Failure"""
         self.testId = "cis_test_009_Failure"
@@ -218,7 +228,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_009_Failure", "testValidTN_SingleCustomerDDP_Failure", output)
         self.assertNotEquals(response.status_code, 500)
-
+ 
     def testValidTN_MultipleCustomers_DDP_Success(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_Success"""
         self.testId = "cis_test_010_Success"
@@ -232,7 +242,7 @@ class CISService(unittest.TestCase):
         self.assertEqual((len(output[0]['account'])), 13)
         self.assertEqual((len(output)), 6)
         #
-
+ 
     def testValidTN_MultipleCustomers_DDP_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_Failure"""
         self.testId = "cis_test_010_Failure"
@@ -243,7 +253,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_010_Failure", "testValidTN_MultipleCustomers_DDP_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_MultipleCustomers_Combination_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_Success"""
         self.testId = "cis_test_011_Success"
@@ -256,7 +266,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_MultipleCustomers_Combination_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_Failure"""
         self.testId = "cis_test_011_Failure"
@@ -267,7 +277,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_011_Failure", "testValidTN_MultipleCustomers_Combination_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_NoDataInGSA_Success(self):
         """TestCase:getValidTN_NoDataInGSA_Success"""
         self.testId = "cis_test_012_Success"
@@ -280,7 +290,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_NoDataInGSA_Failure(self):
         """TestCase:getValidTN_NoDataInGSA_Failure"""
         self.testId = "cis_test_012_Failure"
@@ -291,7 +301,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_012_Failure", "testValidTN_NoDataInGSA_Failure", output)
         self.assertNotEquals((len(output)), 4)
-        
+         
     def testValidTN_CIS_Timeout_Success(self):
         """TestCase:getValidTN_CIS_Timeout_Success"""
         self.testId = "cis_test_013_Success"
@@ -304,7 +314,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_CIS_Timeout_Failure(self):
         """TestCase:getValidTN_CIS_Timeout_Failure"""
         self.testId = "cis_test_013_Failure"
@@ -315,7 +325,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_013_Failure", "testValidTN_CIS_Timeout_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_CIS_Exception_Success(self):
         """TestCase:getValidTN_CIS_Exception_Success"""
         self.testId = "cis_test_014_Success"
@@ -328,7 +338,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_CIS_Exception_Failure(self):
         """TestCase:getValidTN_CIS_Exception_Failure"""
         self.testId = "cis_test_014_Failure"
@@ -339,7 +349,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_014_Failure", "testValidTN_CIS_Exception_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_GSA_Timeout_Success(self):
         """TestCase:getValidTN_GSA_Timeout_Success"""
         self.testId = "cis_test_015_Success"
@@ -352,7 +362,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_GSA_Timeout_Failure(self):
         """TestCase:getValidTN_GSA_Timeout_Failure"""
         self.testId = "cis_test_015_Failure"
@@ -363,7 +373,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_015_Failure", "testValidTN_GSA_Timeout_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_GSA_Exception_Success(self):
         """TestCase:getValidTN_GSA_Exception_Success"""
         self.testId = "cis_test_016_Success"
@@ -376,7 +386,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'UNKNOWN')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-
+ 
     def testValidTN_GSA_Exception_Failure(self):
         """TestCase:getValidTN_GSA_Exception_Failure"""
         self.testId = "cis_test_016_Failure"
@@ -387,7 +397,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_016_Failure", "testValidTN_GSA_Exception_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testInvalidTN_Length_Success(self):
         """TestCase:getInvalidTN_Length_Success"""
         self.testId = "cis_test_017_Success"
@@ -400,7 +410,7 @@ class CISService(unittest.TestCase):
         print response.status_code
         self.assertEqual(response.status_code, 500)
         # self.assertEqual(len(output[0][0]), 16)
-
+ 
     def testInvalidTN_Length_Failure(self):
         """TestCase:getInvalidTN_Length_Failure"""
         self.testId = "cis_test_017_Failure"
@@ -411,7 +421,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_017_Failure", "testInvalidTN_Length_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testInValidTN_AlphaNumeric_Success(self):
         """TestCase:getInValidTN_AlphaNumeric_Success"""
         self.testId = "cis_test_0018_Success"
@@ -423,7 +433,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_0018_Success", "testInValidTN_AlphaNumeric_Success", output)
         print response.status_code
         self.assertEqual(response.status_code, 404)
-
+ 
     def testInValidTN_AlphaNumeric_Failure(self):
         """TestCase:getInValidTN_AlphaNumeric_Failure"""
         self.testId = "cis_test_0018_Failure"
@@ -434,7 +444,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_0018_Failure", "testInValidTN_AlphaNumeric_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testInvalidTN_NPA_Success(self):
         """TestCase:getInvalidTN_NPA_Success"""
         self.testId = "cis_test_019_Success"
@@ -446,7 +456,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_019_Success", "testInvalidTN_NPA_Success", output)
         print response.status_code
         self.assertEqual(response.status_code, 404)
-
+ 
     def testInvalidTN_NPA_Failure(self):
         """TestCase:getInvalidTN_NPA_Failure"""
         self.testId = "cis_test_019_Failure"
@@ -457,7 +467,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_019_Failure", "testInvalidTN_NPA_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testInvalidTN_NXX_Success(self):
         """TestCase:InvalidTN_NXX_Success"""
         self.testId = "cis_test_020_Success"
@@ -470,7 +480,7 @@ class CISService(unittest.TestCase):
         print response.status_code
         self.assertEqual(response.status_code, 500)
         # self.assertEqual(len(output[0][0]), 16)
-
+ 
     def testInvalidTN_NXX_Failure(self):
         """TestCase:InvalidTN_NXX_Failure"""
         self.testId = "cis_test_020_Failure"
@@ -481,7 +491,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_020_Failure", "testInvalidTN_NXX_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testInvalidTN_NXX_N11_Success(self):
         """TestCase:InvalidTN_NXX_N11_Success"""
         self.testId = "cis_test_021_Success"
@@ -494,7 +504,7 @@ class CISService(unittest.TestCase):
         print response.status_code
         self.assertEqual(response.status_code, 500)
         # self.assertEqual(len(output[0][0]), 16)
-
+ 
     def testInvalidTN_NXX_N11_Failure(self):
         """TestCase:InvalidTN_NXX_N11_Failure"""
         self.testId = "cis_test_021_Failure"
@@ -505,7 +515,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_021_Failure", "testInvalidTN_NXX_N11_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testInvalidTN_NXX_555_Success(self):
         """TestCase:InvalidTN_NXX_555_Success"""
         self.testId = "cis_test_022_Success"
@@ -518,7 +528,7 @@ class CISService(unittest.TestCase):
         print response.status_code
         self.assertEqual(response.status_code, 500)
         # self.assertEqual(len(output[0][0]), 16)
-
+ 
     def testInvalidTN_NXX_555_Failure(self):
         """TestCase:InvalidTN_NXX_555_Failure"""
         self.testId = "cis_test_022_Failure"
@@ -529,7 +539,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_022_Failure", "testInvalidTN_NXX_555_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-
+ 
     def testInValidTN_Identical_Success(self):
         """TestCase:InValidTN_Identical_Success"""
         self.testId = "cis_test_023_Success"
@@ -542,7 +552,7 @@ class CISService(unittest.TestCase):
         print response.status_code
         self.assertEqual(response.status_code, 500)
         # self.assertEqual(len(output[0][0]), 16)
-
+ 
     def testInValidTN_Identical_Failure(self):
         """TestCase:InValidTN_Identical_Failure"""
         self.testId = "cis_test_023_Failure"
@@ -553,19 +563,19 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_023_Failure", "testInValidTN_Identical_Failure", output)
         self.assertNotEquals(response.status_code, 200)
-        
+         
     def testValidTN_NoDataIn_Attroute_Success(self):
         """TestCase:getValidTN_NoDataIn_Attroute_Success"""
         self.testId = "cis_test_024_Success"
         uri = configs.config.CISEndpoint + ""  # Test output required
         response = requests.get(uri)
         output = response.json()
-        cisService = CISService("testValidTN_SingleCustomerCSG_Success")
+        cisService = CISService("testValidTN_NoDataIn_Attroute_Success")
         cisService.writeResponseToFile(output)
-        cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
+        cisService.printOutput("cis_test_024_Success", "testValidTN_NoDataIn_Attroute_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
+     
     def testValidTN_NoDataIn_Attroute_Failure(self):
         """TestCase:getValidTN_NoDataIn_Attroute_Failure"""
         self.testId = "cis_test_024_Failure"
@@ -576,7 +586,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_SingleCustomer_CSG_Attroute_CDV_Primary_Success(self):
         """TestCase:getValidTN_SingleCustomer_CSG_Attroute_CDV_Primary_Success"""
         self.testId = "cis_test_025_Success"
@@ -588,7 +598,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
+     
     def testValidTN_SingleCustomer_CSG_Attroute_CDV_Primary_Failure(self):
         """TestCase:getValidTN_SingleCustomer_CSG_Attroute_CDV_Primary_Failure"""
         self.testId = "cis_test_025_Failure"
@@ -599,7 +609,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_MultipleCustomers_Attroute_CDV_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Attroute_CDV_Primary_Success"""
         self.testId = "cis_test_026_Success"
@@ -611,8 +621,8 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
-    
+     
+     
     def testValidTN_MultipleCustomers_Attroute_CDV_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Attroute_CDV_Primary_Failure"""
         self.testId = "cis_test_026_Failure"
@@ -623,7 +633,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_MultipleCustomers_CSG_Attroute_CDV_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_Attroute_CDV_Primary_Success"""
         self.testId = "cis_test_027_Success"
@@ -635,8 +645,8 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
-    
+     
+     
     def testValidTN_MultipleCustomers_CSG_Attroute_CDV_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_Attroute_CDV_Primary_Failure"""
         self.testId = "cis_test_027_Failure"
@@ -647,7 +657,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_SingleCustomer_DDP_Attroute_CDV_Primary_Success(self):
         """TestCase:getValidTN_SingleCustomer_DDP_Attroute_CDV_Primary_Success"""
         self.testId = "cis_test_028_Success"
@@ -659,8 +669,8 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
-    
+     
+     
     def testValidTN_SingleCustomer_DDP_Attroute_CDV_Primary_Failure(self):
         """TestCase:getValidTN_SingleCustomer_DDP_Attroute_CDV_Primary_Failure"""
         self.testId = "cis_test_028_Failure"
@@ -671,7 +681,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_MultipleCustomers_DDP_Attroute_CDV_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_Attroute_CDV_Primary_Success"""
         self.testId = "cis_test_029_Success"
@@ -683,8 +693,8 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
-    
+     
+     
     def testValidTN_MultipleCustomers_DDP_Attroute_CDV_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_Attroute_CDV_Primary_Failure"""
         self.testId = "cis_test_029_Failure"
@@ -695,7 +705,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_MultipleCustomers_Combination_Attroute_CDV_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_Attroute_CDV_Primary_Success"""
         self.testId = "cis_test_030_Success"
@@ -707,7 +717,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
+     
     def testValidTN_MultipleCustomers_Combination_Attroute_CDV_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_Attroute_CDV_Primary_Failure"""
         self.testId = "cis_test_030_Failure"
@@ -718,7 +728,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_SingleCustomer_CSG_Attroute_CDV_Other_Success(self):
         """TestCase:getValidTN_SingleCustomer_CSG_Attroute_CDV_Other_Success"""
         self.testId = "cis_test_031_Success"
@@ -730,8 +740,8 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
-    
+     
+     
     def testValidTN_SingleCustomer_CSG_Attroute_CDV_Other_Failure(self):
         """TestCase:getValidTN_SingleCustomer_CSG_Attroute_CDV_Other_Failure"""
         self.testId = "cis_test_031_Failure"
@@ -742,8 +752,8 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
-    
+     
+     
     def testValidTN_MultipleCustomers_Attroute_CDV_Other_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Attroute_CDV_Other_Success"""
         self.testId = "cis_test_032_Success"
@@ -755,7 +765,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
+     
     def testValidTN_MultipleCustomers_Attroute_CDV_Other_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Attroute_CDV_Other_Failure"""
         self.testId = "cis_test_032_Failure"
@@ -766,7 +776,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-        
+         
     def testValidTN_MultipleCustomers_CSG_Attroute_CDV_Other_Success(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_Attroute_CDV_Other_Success"""
         self.testId = "cis_test_033_Success"
@@ -778,7 +788,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
+     
     def testValidTN_MultipleCustomers_CSG_Attroute_CDV_Other_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_Attroute_CDV_Other_Failure"""
         self.testId = "cis_test_033_Failure"
@@ -789,31 +799,30 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
         self.assertNotEqual((len(output)), 2)
-    
+     
     def testValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Success(self):
         """TestCase:getValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Success"""
         self.testId = "cis_test_034_Success"
         uri = configs.config.CISEndpoint + ""  # Test output required
         response = requests.get(uri)
         output = response.json()
-        cisService = CISService("testValidTN_SingleCustomerCSG_Success")
-        cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
-        cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
-        self.assertTrue(output[0]['tnType'], 'ALTERNATE')
+        cisService = CISService("testValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Success")
+        cisService.writeResponseToFile(output)
+        cisService.printOutput("cis_test_034_Success", "testValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Success", output)
+        self.assertTrue(output[0]['tnType'], 'CDV_OTHER')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-    
+     
     def testValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Failure(self):
         """TestCase:getValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Failure"""
         self.testId = "cis_test_034_Failure"
         uri = configs.config.CISEndpoint + " "  # Test output required
         response = requests.get(uri)
         output = response.json()
-        cisService = CISService("testValidTN_SingleCustomerCSG_Success")
+        cisService = CISService("testValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Failure")
         cisService.writeResponseToFile(output)
-        cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomerCSG_Success", output)
-        self.assertNotEqual((len(output)), 2)
-
-
+        cisService.printOutput("cis_test_006_Success", "testValidTN_SingleCustomer_DDP_Attroute_CDV_Other_Failure", output)
+        self.assertLess((len(output)), 1)
+ 
     def testValidTN_MultipleCustomers_DDP_AttRoute_CDV_Other_Success(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_AttRoute_CDV_Other_Success"""
         self.testId = "cis_test_035_Success"
@@ -826,7 +835,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'CDV_Other')
         self.assertEqual((len(output[0]['accountNumber'])), 13)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_MultipleCustomers_DDP_AttRoute_CDV_Other_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_AttRoute_CDV_Other_Failure"""
         self.testId = "cis_test_035_Failure"
@@ -837,8 +846,8 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_035_Failure", "testValidTN_MultipleCustomers_DDP_AttRoute_CDV_Other_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
-
+ 
+ 
     #AttRoute
     def testValidTN_MultipleCustomers_Combination_AttRoute_CDV_Other_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_AttRoute_CDV_Other_Success"""
@@ -852,7 +861,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'CDV_Other')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_MultipleCustomers_Combination_AttRoute_CDV_Other_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_AttRoute_CDV_Other_Failure"""
         self.testId = "cis_test_036_Failure"
@@ -863,7 +872,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_036_Failure", "testValidTN_MultipleCustomers_Combination_AttRoute_CDV_Other_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     #AttRoute
     def testValidTN_SingleCustomerCSG_AttRoute_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Primary_Success"""
@@ -876,7 +885,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_037_Success", "testValidTN_SingleCustomerCSG_AttRoute_Primary_Success", output)
         self.assertTrue(output[0]['tnType'], 'PRIMARY')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-         
+          
     def testValidTN_SingleCustomerCSG_AttRoute_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Primary_Failure"""
         self.testId = "cis_test_037_Failure"
@@ -887,8 +896,8 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_037_Failure", "testValidTN_SingleCustomerCSG_AttRoute_Primary_Failure", output)
         self.assertNotEqual((len(output)), 2)
-         
-
+          
+ 
     #AttRoute
     def testValidTN_MultipleCustomers_AttRoute_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Primary_Success"""
@@ -902,7 +911,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'PRIMARY')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-           
+            
     def testValidTN_MultipleCustomers_AttRoute_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Primary_Failure"""
         self.testId = "cis_test_038_Failure"
@@ -913,7 +922,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_037_Failure", "testValidTN_MultipleCustomers_AttRoute_Primary_Failure", output)
         self.assertNotEquals((len(output)), 4)
- 
+  
     #AttRoute
     def testValidTN_MultipleCustomers_CSG_AttRoute_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_AttRoute_Primary_Success"""
@@ -927,7 +936,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'PRIMARY')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-          
+           
     def testValidTN_MultipleCustomers_CSG_AttRoute_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_AttRoute_Primary_Failure"""
         self.testId = "cis_test_039_Failure"
@@ -938,8 +947,8 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_039_Failure", "testValidTN_MultipleCustomers_CSG_AttRoute_Primary_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
-
+ 
+ 
     #AttRoute    
     def testValidTN_SingleCustomerDDP_AttRoute_Primary_Success(self):
         """TestCase:getValidTN_SingleCustomerDDP_AttRoute_Primary_Success"""
@@ -951,7 +960,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_040_Success", "testValidTN_SingleCustomerDDP_AttRoute_Primary_Success", output)
         self.assertEqual(response.status_code, 404)
- 
+  
     def testValidTN_SingleCustomerDDP_AttRoute_Primary_Failure(self):
         """TestCase:getValidTN_SingleCustomerDDP_AttRoute_Primary_Failure"""
         self.testId = "cis_test_040_Failure"
@@ -962,7 +971,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_040_Failure", "testValidTN_SingleCustomerDDP_AttRoute_Primary_Failure", output)
         self.assertNotEquals(response.status_code, 500)
-
+ 
     #AttRoute
     def testValidTN_MultipleCustomers_DDP_AttRoute_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_AttRoute_Primary_Success"""
@@ -976,7 +985,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'PRIMARY')
         self.assertEqual((len(output[0]['account'])), 13)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_MultipleCustomers_DDP_AttRoute_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_AttRoute_Primary_Failure"""
         self.testId = "cis_test_041_Failure"
@@ -987,7 +996,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_041_Failure", "testValidTN_MultipleCustomers_DDP_AttRoute_Primary_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     #AttRoute
     def testValidTN_MultipleCustomers_Combination_AttRoute_Primary_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_AttRoute_Primary_Success"""
@@ -1001,7 +1010,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'PRIMARY')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_MultipleCustomers_Combination_AttRoute_Primary_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_AttRoute_Primary_Failure"""
         self.testId = "cis_test_042_Failure"
@@ -1012,7 +1021,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_042_Failure", "testValidTN_MultipleCustomers_Combination_AttRoute_Primary_Failure", output)
         self.assertNotEquals((len(output)), 4)
-   
+    
     #AttRoute
     def testValidTN_MultipleCustomers_Combination_AttRoute_Alternate_Success(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_AttRoute_Alternate_Success"""
@@ -1026,7 +1035,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_MultipleCustomers_Combination_AttRoute_Alternate_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_Combination_AttRoute_Alternate_Failure"""
         self.testId = "cis_test_043_Failure"
@@ -1037,8 +1046,8 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_043_Failure", "testValidTN_MultipleCustomers_Combination_AttRoute_Alternate_Failure", output)
         self.assertNotEquals((len(output)), 4)
-   
-
+    
+ 
     #AttRoute
     def testValidTN_SingleCustomerCSG_AttRoute_Alternate_Success(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Alternate_Success"""
@@ -1051,7 +1060,7 @@ class CISService(unittest.TestCase):
         cisService.printOutput("cis_test_044_Success", "testValidTN_SingleCustomerCSG_AttRoute_Alternate_Success", output)
         self.assertTrue(output[0]['tnType'], 'ALTERNATE')
         self.assertEqual(len(output[0]['accountNumber']), 16)
-         
+          
     def testValidTN_SingleCustomerCSG_AttRoute_Alternate_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Alternate_Failure"""
         self.testId = "cis_test_044_Failure"
@@ -1062,7 +1071,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_044_Failure", "testValidTN_SingleCustomerCSG_AttRoute_Alternate_Failure", output)
         self.assertNotEqual((len(output)), 2)
-
+ 
     #AttRoute
     def testValidTN_MultipleCustomers_AttRoute_Alternate_Success(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Alternate_Success"""
@@ -1076,7 +1085,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-           
+            
     def testValidTN_MultipleCustomers_AttRoute_Alternate_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_AttRoute_Alternate_Failure"""
         self.testId = "cis_test_045_Failure"
@@ -1087,7 +1096,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_045_Failure", "testValidTN_MultipleCustomers_AttRoute_Alternate_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     #AttRoute
     def testValidTN_MultipleCustomers_CSG_AttRoute_Alternate_Success(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_AttRout_eAlternate_Success"""
@@ -1101,7 +1110,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0])), 2)
         self.assertEqual((len(output)), 6)
-          
+           
     def testValidTN_MultipleCustomers_CSG_AttRoute_Alternate_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_CSG_AttRoute_Alternate_Failure"""
         self.testId = "cis_test_046_Failure"
@@ -1112,7 +1121,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_046_Failure", "testValidTN_MultipleCustomers_CSG_AttRoute_Alternate_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     #AttRoute
     def testValidTN_SingleCustomerDDP_AttRoute_Alternate_Success(self):
         """TestCase:getValidTN_SingleCustomerDDP_AttRoute_Alternate_Success"""
@@ -1124,7 +1133,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_047_Success", "testValidTN_SingleCustomerDDP_AttRoute_Alternate_Success", output)
         self.assertEqual(response.status_code, 404)
- 
+  
     def testValidTN_SingleCustomerDDP_AttRoute_Alternate_Failure(self):
         """TestCase:getValidTN_SingleCustomerDDP_AttRoute_Alternate_Failure"""
         self.testId = "cis_test_047_Failure"
@@ -1135,7 +1144,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_047_Failure", "testValidTN_SingleCustomerDDP_AttRoute_Alternate_Failure", output)
         self.assertNotEquals(response.status_code, 500)
-
+ 
     def testValidTN_MultipleCustomers_DDP_AttRoute_Alternate_Success(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_AttRoute_Alternate_Success"""
         self.testId = "cis_test_048_Success"
@@ -1148,7 +1157,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0]['account'])), 13)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_MultipleCustomers_DDP_AttRoute_Alternate_Failure(self):
         """TestCase:getValidTN_MultipleCustomers_DDP_AttRoute_Alternate_Failure"""
         self.testId = "cis_test_048_Failure"
@@ -1159,8 +1168,8 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_048_Failure", "testValidTN_MultipleCustomers_DDP_AttRoute_Alternate_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
-        
+ 
+         
     def testValidTN_Attroute_Timeout_Success(self):
         """TestCase:getValidTN_Attroute_Timeout_Success"""
         self.testId = "cis_test_049_Success"
@@ -1173,7 +1182,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0]['account'])), 13)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_Attroute_Timeout_Failure(self):
         """TestCase:getValidTN_Attroute_Timeout_Failure"""
         self.testId = "cis_test_049_Failure"
@@ -1184,7 +1193,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_006_Success", "testValidTN_Attroute_Timeout_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_Attroute_Exception_Success(self):
         """TestCase:getValidTN_Attroute_Exception_Success"""
         self.testId = "cis_test_050_Success"
@@ -1197,7 +1206,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0]['account'])), 13)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_Attroute_Exception_Failure(self):
         """TestCase:getValidTN_Attroute_Exception_Failure"""
         self.testId = "cis_test_050_Failure"
@@ -1208,7 +1217,7 @@ class CISService(unittest.TestCase):
         cisService.writeResponseToFile(output)
         cisService.printOutput("cis_test_050_Failure", "testValidTN_Attroute_Exception_Failure", output)
         self.assertNotEquals((len(output)), 4)
-
+ 
     def testValidTN_Attroute_NotAvailable_Success(self):
         """TestCase:getValidTN_Attroute_NotAvailable_Success"""
         self.testId = "cis_test_051_Success"
@@ -1221,7 +1230,7 @@ class CISService(unittest.TestCase):
         self.assertEqual(output[1]['tnType'], 'ALTERNATE')
         self.assertEqual((len(output[0]['account'])), 13)
         self.assertEqual((len(output)), 6)
-         
+          
     def testValidTN_Attroute_NotAvailable_Failure(self):
         """TestCase:getValidTN_Attroute_NotAvailable_Failure"""
         self.testId = "cis_test_051_Failure"
@@ -1234,6 +1243,4 @@ class CISService(unittest.TestCase):
         self.assertNotEquals((len(output)), 4)
 
 if __name__ == '__main__':
-    del sys.argv[1:]
-    print sys.argv[1]
-unittest.main()
+    unittest.main()
