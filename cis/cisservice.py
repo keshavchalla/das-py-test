@@ -14,7 +14,7 @@ class CISService(unittest.TestCase):
 
     def setUp(self):
         logging.debug("Validating: %s" % self._testMethodName)
-        #logging.debug("Validating: %s" % self.endpoint)
+        logging.debug("Validating: %s" % self.endpoint)
 
     def tearDown(self):
         pass
