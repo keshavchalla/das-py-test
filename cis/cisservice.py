@@ -1240,6 +1240,5 @@ class CISService(unittest.TestCase):
 #         cisService.printOutput("cis_test_051_Failure", "testValidTN_Attroute_NotAvailable_Failure", output)
 #         self.assertNotEquals((len(output)), 4)
 
-
 if __name__ == '__main__':
     unittest.main()
